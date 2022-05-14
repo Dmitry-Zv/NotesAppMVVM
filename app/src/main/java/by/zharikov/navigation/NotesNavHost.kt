@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import by.zharikov.notesapp.ui.MainViewModel
 import by.zharikov.screens.Add
 import by.zharikov.screens.Main
 import by.zharikov.screens.Note
@@ -19,22 +20,22 @@ sealed class NavRoute(val route: String) {
 }
 
 @Composable
-fun NotesNavHost() {
+fun NotesNavHost(mViewModel:MainViewModel) {
 
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = NavRoute.Start.route) {
         composable(NavRoute.Start.route) {
-            Start(navHostController = navController)
+            Start(navHostController = navController, mViewModel = mViewModel)
         }
         composable(NavRoute.Main.route) {
-            Main(navHostController = navController)
+            Main(navHostController = navController, mViewModel = mViewModel)
         }
         composable(NavRoute.Add.route) {
-            Add(navHostController = navController)
+            Add(navHostController = navController, mViewModel = mViewModel)
         }
         composable(NavRoute.Note.route) {
-            Note(navHostController = navController)
+            Note(navHostController = navController, mViewModel = mViewModel)
         }
 
     }

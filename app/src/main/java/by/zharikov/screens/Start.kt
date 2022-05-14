@@ -18,12 +18,11 @@ import by.zharikov.navigation.NavRoute
 import by.zharikov.notesapp.ui.MainViewModel
 import by.zharikov.notesapp.ui.MainViewModelFactory
 import by.zharikov.notesapp.ui.theme.NotesAppTheme
-import by.zharikov.utils.TYPE_DATABASE
 import by.zharikov.utils.TYPE_FIREBASE
 import by.zharikov.utils.TYPE_ROOM
 
 @Composable
-fun Start(navHostController: NavHostController) {
+fun Start(navHostController: NavHostController, mViewModel: MainViewModel) {
     val context = LocalContext.current
     val mViewModel: MainViewModel =
         viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
@@ -68,7 +67,10 @@ fun Start(navHostController: NavHostController) {
 @Composable
 fun PrevStartScreen() {
     NotesAppTheme() {
-        Start(navHostController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+        Start(navHostController = rememberNavController(), mViewModel = mViewModel)
 
     }
 }

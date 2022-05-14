@@ -3,7 +3,6 @@ package by.zharikov.screens
 import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -30,10 +28,10 @@ import by.zharikov.navigation.NavRoute
 import by.zharikov.notesapp.ui.MainViewModel
 import by.zharikov.notesapp.ui.MainViewModelFactory
 import by.zharikov.notesapp.ui.theme.NotesAppTheme
-import javax.security.auth.Subject
 
 @Composable
-fun Main(navHostController: NavHostController) {
+fun Main(navHostController: NavHostController, mViewModel: MainViewModel) {
+    val notes = mViewModel.readAllNote().observeAsState(listOf()).value
     val context = LocalContext.current
     val mViewModel: MainViewModel =
         viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
@@ -74,6 +72,11 @@ fun Main(navHostController: NavHostController) {
 //                navHostController = navHostController
 //            )
 //        }
+        LazyColumn{
+            items(notes){
+                note -> NoteItem(note = note, navHostController = navHostController)
+            }
+        }
 
     }
 }
@@ -109,7 +112,10 @@ fun NoteItem(note: Note, navHostController: NavHostController) {
 @Composable
 fun PrevMainScreen() {
     NotesAppTheme() {
-        Main(navHostController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+        Main(navHostController = rememberNavController(), mViewModel = mViewModel)
 
     }
 }
