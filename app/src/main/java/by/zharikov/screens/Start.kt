@@ -18,6 +18,9 @@ import by.zharikov.navigation.NavRoute
 import by.zharikov.notesapp.ui.MainViewModel
 import by.zharikov.notesapp.ui.MainViewModelFactory
 import by.zharikov.notesapp.ui.theme.NotesAppTheme
+import by.zharikov.utils.Constants.Keys.FIREBASE_DATABASE
+import by.zharikov.utils.Constants.Keys.ROOM_DATABASE
+import by.zharikov.utils.Constants.Keys.WHAT_WILL_WE_USE
 import by.zharikov.utils.TYPE_FIREBASE
 import by.zharikov.utils.TYPE_ROOM
 
@@ -33,7 +36,7 @@ fun Start(navHostController: NavHostController, mViewModel: MainViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "What will we use?")
+            Text(text = WHAT_WILL_WE_USE)
             Button(
                 onClick = {
                     mViewModel.initialDatabase(TYPE_ROOM) {
@@ -45,7 +48,7 @@ fun Start(navHostController: NavHostController, mViewModel: MainViewModel) {
                     .width(200.dp)
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Room Database")
+                Text(text = ROOM_DATABASE)
             }
             Button(
                 onClick = {
@@ -57,7 +60,7 @@ fun Start(navHostController: NavHostController, mViewModel: MainViewModel) {
                     .width(200.dp)
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Firebase Database")
+                Text(text = FIREBASE_DATABASE)
             }
         }
     }

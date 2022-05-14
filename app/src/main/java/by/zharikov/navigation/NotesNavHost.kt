@@ -9,18 +9,24 @@ import by.zharikov.screens.Add
 import by.zharikov.screens.Main
 import by.zharikov.screens.Note
 import by.zharikov.screens.Start
+import by.zharikov.utils.Constants
+import by.zharikov.utils.Constants.Screens.ADD_SCREEN
+import by.zharikov.utils.Constants.Screens.MAIN_SCREEN
+import by.zharikov.utils.Constants.Screens.NOTE_SCREEN
+import by.zharikov.utils.Constants.Screens.START_SCREEN
+
 
 sealed class NavRoute(val route: String) {
-    object Start : NavRoute("start_screen")
-    object Main : NavRoute("main_screen")
-    object Add : NavRoute("add_screen")
-    object Note : NavRoute("note_screen")
+    object Start : NavRoute(START_SCREEN)
+    object Main : NavRoute(MAIN_SCREEN)
+    object Add : NavRoute(ADD_SCREEN)
+    object Note : NavRoute(NOTE_SCREEN)
 
 
 }
 
 @Composable
-fun NotesNavHost(mViewModel:MainViewModel) {
+fun NotesNavHost(mViewModel: MainViewModel) {
 
     val navController = rememberNavController()
 
@@ -34,8 +40,9 @@ fun NotesNavHost(mViewModel:MainViewModel) {
         composable(NavRoute.Add.route) {
             Add(navHostController = navController, mViewModel = mViewModel)
         }
-        composable(NavRoute.Note.route) {
-            Note(navHostController = navController, mViewModel = mViewModel)
+        composable(NavRoute.Note.route + "/{${Constants.Keys.ID}}") { backStackEntry ->
+
+            Note(navHostController = navController, mViewModel = mViewModel, noteId = backStackEntry.arguments?.getString(Constants.Keys.ID))
         }
 
     }
