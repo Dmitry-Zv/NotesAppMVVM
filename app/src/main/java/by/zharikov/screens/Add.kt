@@ -24,6 +24,10 @@ import by.zharikov.navigation.NavRoute
 import by.zharikov.notesapp.ui.MainViewModel
 import by.zharikov.notesapp.ui.MainViewModelFactory
 import by.zharikov.notesapp.ui.theme.NotesAppTheme
+import by.zharikov.utils.Constants.Keys.ADD_NEW_NOTE
+import by.zharikov.utils.Constants.Keys.ADD_NOTE
+import by.zharikov.utils.Constants.Keys.NOTE_SUBTITLE
+import by.zharikov.utils.Constants.Keys.NOTE_TITLE
 
 @Composable
 fun Add(navHostController: NavHostController, mViewModel: MainViewModel) {
@@ -39,7 +43,7 @@ fun Add(navHostController: NavHostController, mViewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Add new note",
+                text = ADD_NEW_NOTE,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 8.dp)
@@ -49,7 +53,7 @@ fun Add(navHostController: NavHostController, mViewModel: MainViewModel) {
                     title = it
                     isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
                 },
-                label = { Text(text = "Not title") },
+                label = { Text(text = NOTE_TITLE) },
 
                 isError = title.isEmpty()
             )
@@ -58,7 +62,7 @@ fun Add(navHostController: NavHostController, mViewModel: MainViewModel) {
                     subtitle = it
                     isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
                 },
-                label = { Text(text = "Not subtitle") },
+                label = { Text(text = NOTE_SUBTITLE) },
                 isError = subtitle.isEmpty()
             )
             Button(
@@ -77,7 +81,7 @@ fun Add(navHostController: NavHostController, mViewModel: MainViewModel) {
 
                 }
             ) {
-                Text(text = "Add note")
+                Text(text = ADD_NOTE)
             }
         }
     }
