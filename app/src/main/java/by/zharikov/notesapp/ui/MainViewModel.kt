@@ -3,6 +3,7 @@ package by.zharikov.notesapp.ui
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import by.zharikov.database.firebase.FireBaseRepository
 import by.zharikov.database.room.AppRoomDatabase
 import by.zharikov.database.room.repository.RoomRepository
 import by.zharikov.model.Note
@@ -25,6 +26,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 val dao = AppRoomDatabase.getInstance(context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
                 onSuccess()
+            }
+            TYPE_FIREBASE -> {
+                REPOSITORY = FireBaseRepository()
+                REPOSITORY.connectToDatabase({
+                    onSuccess()
+                },
+                    {
+                        Log.d(TAG, "Error ${it}")
+                    })
             }
         }
     }
