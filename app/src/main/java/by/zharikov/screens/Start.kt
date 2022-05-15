@@ -69,7 +69,7 @@ fun Start(navHostController: NavHostController, mViewModel: MainViewModel) {
                             LOGIN = logIn
                             PASSWORD = password
                             mViewModel.initialDatabase(TYPE_FIREBASE) {
-
+                                navHostController.navigate(NavRoute.Main.route)
                             }
                         },
                         enabled = logIn.isNotEmpty() && password.isNotEmpty()

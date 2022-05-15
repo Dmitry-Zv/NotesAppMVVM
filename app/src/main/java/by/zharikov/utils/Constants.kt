@@ -5,6 +5,7 @@ import by.zharikov.database.DatabaseRepository
 const val TYPE_DATABASE = "type_database"
 const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
+const val FIREBASE_ID = "firebase id"
 
 lateinit var REPOSITORY : DatabaseRepository
 lateinit var LOGIN : String
