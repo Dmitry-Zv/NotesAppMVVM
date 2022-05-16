@@ -30,16 +30,24 @@ import by.zharikov.utils.Constants.Keys.SUBTITLE
 import by.zharikov.utils.Constants.Keys.TITLE
 import by.zharikov.utils.Constants.Keys.UPDATE
 import by.zharikov.utils.Constants.Keys.UPDATE_NOTE
+import by.zharikov.utils.DB_TYPE
+import by.zharikov.utils.TYPE_FIREBASE
+import by.zharikov.utils.TYPE_ROOM
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Note(navHostController: NavHostController, mViewModel: MainViewModel, noteId: String?) {
     val notes = mViewModel.readAllNote().observeAsState(listOf()).value
-    val note = notes.firstOrNull { it.id == noteId?.toInt() } ?: by.zharikov.model.Note(
-        title = NONE,
-        subtitle = NONE
-    )
+    val note = when (DB_TYPE) {
+        TYPE_ROOM -> {
+            notes.firstOrNull { it.id == noteId?.toInt() } ?: by.zharikov.model.Note()
+        }
+        TYPE_FIREBASE -> {
+            notes.firstOrNull { it.firebaseId == noteId } ?: by.zharikov.model.Note()
+        }
+        else -> by.zharikov.model.Note()
+    }
     val bottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
@@ -82,7 +90,8 @@ fun Note(navHostController: NavHostController, mViewModel: MainViewModel, noteId
                                 by.zharikov.model.Note(
                                     id = note.id,
                                     title = title,
-                                    subtitle = subtitle
+                                    subtitle = subtitle,
+                                    firebaseId = note.firebaseId
                                 )
                             ) {
                                 navHostController.navigate(NavRoute.Main.route)
