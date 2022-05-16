@@ -28,6 +28,10 @@ import by.zharikov.navigation.NavRoute
 import by.zharikov.notesapp.ui.MainViewModel
 import by.zharikov.notesapp.ui.MainViewModelFactory
 import by.zharikov.notesapp.ui.theme.NotesAppTheme
+import by.zharikov.utils.Constants
+import by.zharikov.utils.DB_TYPE
+import by.zharikov.utils.TYPE_FIREBASE
+import by.zharikov.utils.TYPE_ROOM
 
 @Composable
 fun Main(navHostController: NavHostController, mViewModel: MainViewModel) {
@@ -72,9 +76,9 @@ fun Main(navHostController: NavHostController, mViewModel: MainViewModel) {
 //                navHostController = navHostController
 //            )
 //        }
-        LazyColumn{
-            items(notes){
-                note -> NoteItem(note = note, navHostController = navHostController)
+        LazyColumn {
+            items(notes) { note ->
+                NoteItem(note = note, navHostController = navHostController)
             }
         }
 
@@ -83,12 +87,17 @@ fun Main(navHostController: NavHostController, mViewModel: MainViewModel) {
 
 @Composable
 fun NoteItem(note: Note, navHostController: NavHostController) {
+    val noteId = when (DB_TYPE) {
+        TYPE_FIREBASE -> note.firebaseId
+        TYPE_ROOM -> note.id
+        else -> Constants.Keys.EMPTY
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 24.dp)
             .clickable {
-                navHostController.navigate(NavRoute.Note.route + "/${note.id}")
+                navHostController.navigate(NavRoute.Note.route + "/${noteId}")
             },
         elevation = 6.dp
     ) {

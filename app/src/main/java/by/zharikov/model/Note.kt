@@ -13,5 +13,6 @@ data class Note(
     val title: String = "",
     @ColumnInfo
     val subtitle: String = "",
-    val fireBaseID : String = ""
+    @ColumnInfo(name = "firebase_id")
+    val firebaseId : String = ""
 )
