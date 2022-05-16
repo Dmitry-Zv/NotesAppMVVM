@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Note(navHostController: NavHostController, mViewModel: MainViewModel, noteId: String?) {
     val notes = mViewModel.readAllNote().observeAsState(listOf()).value
-    val note = when (DB_TYPE) {
+    val note = when (DB_TYPE.value) {
         TYPE_ROOM -> {
             notes.firstOrNull { it.id == noteId?.toInt() } ?: by.zharikov.model.Note()
         }

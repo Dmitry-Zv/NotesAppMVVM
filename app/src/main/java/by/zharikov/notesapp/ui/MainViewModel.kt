@@ -7,9 +7,7 @@ import by.zharikov.database.firebase.FireBaseRepository
 import by.zharikov.database.room.AppRoomDatabase
 import by.zharikov.database.room.repository.RoomRepository
 import by.zharikov.model.Note
-import by.zharikov.utils.REPOSITORY
-import by.zharikov.utils.TYPE_FIREBASE
-import by.zharikov.utils.TYPE_ROOM
+import by.zharikov.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
@@ -65,6 +63,21 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 viewModelScope.launch(Dispatchers.Main) {
                     onSuccess()
                 }
+            }
+        }
+    }
+
+    fun signOut(onSuccess: () -> Unit) {
+        when (DB_TYPE.value) {
+            TYPE_ROOM,
+            TYPE_FIREBASE -> {
+                REPOSITORY.signOut()
+                DB_TYPE.value = Constants.Keys.EMPTY
+                onSuccess()
+
+            }
+            else -> {
+                Log.d(TAG, "signOut: ELSE: ${DB_TYPE.value}")
             }
         }
     }
